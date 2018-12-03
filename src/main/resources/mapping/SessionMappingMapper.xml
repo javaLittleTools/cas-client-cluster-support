@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oc.dao.SessionMappingMapper">
+    <resultMap id="BaseResultMap" type="com.oc.domain.SessionMapping">
+        <id column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="mapping_id" property="mappingId" jdbcType="VARCHAR"/>
+        <result column="session_id" property="sessionId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        ID, mapping_id, session_id
+    </sql>
+
+    <insert id="insertSelective" parameterType="com.oc.domain.SessionMapping" useGeneratedKeys="true" keyProperty="id">
+        insert into session_mapping
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="mappingId != null">
+                mapping_id,
+            </if>
+            <if test="sessionId != null">
+                session_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="mappingId != null">
+                #{mappingId,jdbcType=VARCHAR},
+            </if>
+            <if test="sessionId != null">
+                #{sessionId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List"/>
+    from SESSION_MAPPING
+        where mapping_id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.String" >
+    delete from session_mapping
+    where session_id = #{id,jdbcType=VARCHAR}
+  </delete>
+</mapper>
